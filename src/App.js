@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Create from './Create'
+import Navbar from './Navbar'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from "./Home";
+import Category from "./Category";
+
 
 function App() {
+  const [balance, setBalance] = useState(36);
+  const [categories, setCategories] = useState(['Basic', 'Sport']);
+  const [details, setDetails] = useState([
+    {
+      sum: 40,
+      desc: "Present from mum",
+      type: 'Income',
+      category: 'Basic',
+    },
+    {
+      sum: 4,
+      desc: "Bougth ice-cream",
+      type: 'Outcome',
+      category: 'Basic',
+    },
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Home balance={balance} details={details}/>}/>
+          <Route path='/create' element={<Create balance={balance} setBalance={setBalance} details={details} setDetails={setDetails} categories={categories} />}/>
+          <Route path='/category' element={<Category categories={categories} setCategories={setCategories} />}/>
+        </Routes>        
+      </div>
+    </BrowserRouter>
   );
 }
 
