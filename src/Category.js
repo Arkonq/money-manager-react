@@ -16,6 +16,7 @@ const Category = ({categories, setCategories}) => {
 
   return (
     <form className="form" onSubmit={handleSubmit}>      
+      <h2 className="title">Category Creation Page</h2>
       <div className="form-group">
         <label>Name </label>
         <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
