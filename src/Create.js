@@ -1,21 +1,31 @@
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom';
 
-const Create = ({balance, setBalance, details, setDetails, categories}) => {
+const Create = ({ setRefresh, balance, categories}) => {
   const [sum, setSum] = useState(0);
   const [desc, setDesc] = useState('');
   const [type, setType] = useState('Income');
-  const [category, setCategory] = useState(categories[0]);
+  const [categoryName, setCategoryName] = useState(categories[0].name);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // if Sum field is empty
     if (sum === 0) return;
-    type === 'Income' ? setBalance(balance + sum) : setBalance(balance - sum);
-    let newDetails = details.concat();
-    newDetails.push({ sum: sum, desc: desc, type: type, category: category });
-    console.log(newDetails);
-    setDetails(newDetails);
+    // Change balance
+    const newBalance = type === 'Income' ? balance + sum : balance - sum;
+    fetch('http://localhost:8000/accounts/1', {
+      method: 'PUT',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({balance: newBalance})
+    });    
+    // Change details
+    fetch('http://localhost:8000/details', {
+      method: 'POST',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ sum: sum, desc: desc, type: type, category: categoryName})
+    });
+    setRefresh(true);
     navigate('/');
   }
 
@@ -35,9 +45,9 @@ const Create = ({balance, setBalance, details, setDetails, categories}) => {
       </div>
       <div className="form-group">
         <label>Category </label>
-        <select value={category} onChange={(e) => setCategory(e.target.value)} >
+        <select value={categoryName} onChange={(e) => setCategoryName(e.target.value)} >
           {categories.map((category) =>
-            <option value={category}>{category}</option>
+            <option key={category.id} value={category.name}>{category.name}</option>
           )}
         </select>
       </div>

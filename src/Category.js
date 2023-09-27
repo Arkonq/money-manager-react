@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Category = ({categories, setCategories}) => {
+const Category = ({setRefresh}) => {
 
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState({name: ''});
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newCategories = categories.concat();
-    newCategories.push(category);
-    console.log(newCategories);
-    setCategories(newCategories);
+    fetch('http://localhost:8000/categories', {
+      method: 'POST',
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(category)
+    });
+    setRefresh(true);
     navigate('/');
   }
 
@@ -19,7 +21,7 @@ const Category = ({categories, setCategories}) => {
       <h2 className="title">Category Creation Page</h2>
       <div className="form-group">
         <label>Name </label>
-        <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
+        <input type="text" value={category.name} onChange={(e) => setCategory({name: e.target.value})} />
       </div>
       <button type="submit">Add</button>
     </form>

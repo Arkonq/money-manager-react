@@ -1,0 +1,42 @@
+{
+  "accounts": [
+    {
+      "balance": 16,
+      "id": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Basic"
+    },
+    {
+      "id": 2,
+      "name": "Sport"
+    },
+    {
+      "name": "new",
+      "id": 3
+    },
+    {
+      "name": "521",
+      "id": 4
+    }
+  ],
+  "details": [
+    {
+      "sum": 20,
+      "desc": "",
+      "type": "Income",
+      "category": "Basic",
+      "id": 1
+    },
+    {
+      "sum": 4,
+      "desc": "sport",
+      "type": "Outcome",
+      "category": "Sport",
+      "id": 2
+    }
+  ]
+}
