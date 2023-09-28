@@ -5,7 +5,7 @@ const Create = ({ setRefresh, balance, categories}) => {
   const [sum, setSum] = useState(0);
   const [desc, setDesc] = useState('');
   const [type, setType] = useState('Income');
-  const [categoryName, setCategoryName] = useState(categories[0].name);
+  const [categoryName, setCategoryName] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
